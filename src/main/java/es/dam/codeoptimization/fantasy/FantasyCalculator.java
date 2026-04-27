@@ -6,11 +6,11 @@ package es.dam.codeoptimization.fantasy;
 import es.dam.codeoptimization.PlayerStats;
 
 /**
- * THE CLASS YOU HAVE TO MODIFY
- * @author Your Name
+ * Class used to calculate the points of a player for a Fantasy-like game.
+ * 
+ * @author Izan
  */
 public class FantasyCalculator {
-
     // Method to calculate the points
     public static int calcP(PlayerStats s) {
         int result = 0; 
@@ -25,17 +25,32 @@ public class FantasyCalculator {
         char matchResult = s.matchResult;
         String position = s.position;
 
+        result = calculatePoints(result, minutes, yellowCard, redCard, matchResult, goals, assists, saves, goalsAgainst, position);
         
-        
-        result = pointsForTime(result, minutes);
-            
-        result = pointsForCards(result, yellowCard, redCard);
-            
-        result = pointsForMatchResult(result, matchResult);
-        
-        result = pointsForGoals(result, goals, 5);
+        return result;
+    }
 
-        result = pointsForAssists(result, assists, 6);
+    /**
+     * Function used to calculate the points of a player.
+     * 
+     * @param the stadistics done of a player in a match: goals scored, assists..
+     * @return the score received according to his stats.
+     */
+    static int calculatePoints(int result, int minutes, boolean yellowCard, boolean redCard, char matchResult, int goals, int assists, int saves, int goalsAgainst, String position) {
+        result = calculatePointsByPosition(result, saves, goalsAgainst, position);
+        
+        result = calculatePointsCommon(result, minutes, yellowCard, redCard, matchResult, goals, assists);
+        
+        return result;
+    }
+    
+    /**
+     * Function used to calculate part of the points of a player based in his position.
+     * 
+     * @param the stadistics done of a player in a match that change of weight depend of the position : saves, goals of the against and the position itself.
+     * @return the score received according to his stats and position.
+     */
+    static int calculatePointsByPosition(int result, int saves, int goalsAgainst, String position) {
         
         switch (position) {
             case "PORTERO":
@@ -53,6 +68,27 @@ public class FantasyCalculator {
         
         return result;
     }
+    
+    /**
+     * Function used to calculate part of the points of a player based in his position.
+     * 
+     * @param the stadistics done of a player in a match that not change of weight depend of the position : played minutes, yellow cards, goals...
+     * @return the score received according to his stats.
+     */
+    static int calculatePointsCommon(int result, int minutes, boolean yellowCard, boolean redCard, char matchResult, int goals, int assists) {
+        result = pointsForTime(result, minutes);
+            
+        result = pointsForCards(result, yellowCard, redCard);
+            
+        result = pointsForMatchResult(result, matchResult);
+        
+        result = pointsForGoals(result, goals, 5);
+
+        result = pointsForAssists(result, assists, 6);
+        
+        return result;
+    }
+    
     
     static int pointsForTime(int result, int minutes) {
         if (minutes > 0 && minutes < 60) {
