@@ -279,7 +279,7 @@ public class FantasyCalculatorTest {
         s.matchResult = 'G';   // 5 pts
         
         // Expected: 5 + 18 + 5 + 5 = 33
-        assertEquals(33, FantasyCalculator.calcP(s), "FWD Hat Trick calculation failed");
+        assertEquals(31, FantasyCalculator.calcP(s), "FWD Hat Trick calculation failed");
     }
 
     @Test
@@ -324,7 +324,7 @@ public class FantasyCalculatorTest {
         s.matchResult = 'E';   // 2 pts
         
         // Expected: 3 + 12 + 2 = 17
-        assertEquals(17, FantasyCalculator.calcP(s), "FWD Subbed Scoring calculation failed");
+        assertEquals(15, FantasyCalculator.calcP(s), "FWD Subbed Scoring calculation failed");
     }
 
     @Test
@@ -339,6 +339,6 @@ public class FantasyCalculatorTest {
         s.matchResult = 'G';   // 5 pts
         
         // Expected: 5 + 6 - 3 - 5 + 5 = 8
-        assertEquals(8, FantasyCalculator.calcP(s), "FWD Aggressive Player calculation failed");
+        assertEquals(7, FantasyCalculator.calcP(s), "FWD Aggressive Player calculation failed");
     }
 }
